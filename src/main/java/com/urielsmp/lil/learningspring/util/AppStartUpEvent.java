@@ -1,7 +1,6 @@
 package com.urielsmp.lil.learningspring.util;
 
-import com.urielsmp.lil.learningspring.data.Room;
-import com.urielsmp.lil.learningspring.data.RoomRepository;
+import com.urielsmp.lil.learningspring.data.*;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -10,9 +9,13 @@ import org.springframework.stereotype.Component;
 public class AppStartUpEvent implements ApplicationListener<ApplicationReadyEvent> {
 
     private final RoomRepository roomRepository;
+    private final GuestRepository guestRepository;
+    private final ReservationRepository reservationRepository;
 
-    public AppStartUpEvent(RoomRepository roomRepository) {
+    public AppStartUpEvent(RoomRepository roomRepository, GuestRepository guestRepository, ReservationRepository reservationRepository) {
         this.roomRepository = roomRepository;
+        this.guestRepository = guestRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -20,6 +23,10 @@ public class AppStartUpEvent implements ApplicationListener<ApplicationReadyEven
 
         Iterable<Room> rooms = this.roomRepository.findAll();
         rooms.forEach(System.out::println);
+        Iterable<Guest> guests = this.guestRepository.findAll();
+        guests.forEach(System.out::println);
+        Iterable<Reservation> reservations = this.reservationRepository.findAll();
+        reservations.forEach(System.out::println);
 
     }
 }
