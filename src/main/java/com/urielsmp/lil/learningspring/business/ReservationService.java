@@ -33,7 +33,8 @@ public class ReservationService {
 
         Iterable<Reservation> reservations = this.reservationRepository.findByRsvDate(new java.sql.Date(date.getTime()));
         reservations.forEach(reservation -> {
-            RoomReservation roomReservation = roomReservationMap.get(reservation.getRoomId());
+            RoomReservation roomReservation;
+            roomReservation = roomReservationMap.get(reservation.getRoomId());
             Guest guest = this.guestRepository.findById(reservation.getGuestId()).get();
             roomReservation.setFirstName(guest.getFirstName());
             roomReservation.setLastName(guest.getLastName());
