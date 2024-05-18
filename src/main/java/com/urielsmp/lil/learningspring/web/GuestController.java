@@ -1,31 +1,23 @@
 package com.urielsmp.lil.learningspring.web;
 
-import com.urielsmp.lil.learningspring.business.GuestService;
-import com.urielsmp.lil.learningspring.business.GuestsModel;
+import com.urielsmp.lil.learningspring.business.ReservationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/guests")
 public class GuestController {
+    private final ReservationService reservationService;
 
-    private final GuestService guestService;
-
-    public GuestController(GuestService guestService) {
-        this.guestService = guestService;
+    public GuestController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getReservations(Model model){
-
-        List<GuestsModel> guestsModels = this.guestService.getGuests();
-        model.addAttribute("guestModels", guestsModels);
-
-        return  "guestmodel";
-
+    public String getGuests(Model model){
+        model.addAttribute("guests", this.reservationService.getHotelGuests());
+        return "guestmodel";
     }
 }
